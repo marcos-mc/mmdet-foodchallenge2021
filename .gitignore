@@ -116,6 +116,12 @@ data
 work_dirs/
 *_logs/
 checkpoints/
+TROUT_*/
+Checkpoint_95_5/
+NewVal_CkpEp19/
+prev_logs/
+test_results/
+
 
 # Pytorch
 *.pth

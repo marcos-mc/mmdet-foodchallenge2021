@@ -246,8 +246,11 @@ test_pipeline = [
 ]
 data = dict(
     samples_per_gpu=2,
-    workers_per_gpu=2,
+    workers_per_gpu=4,
     train=dict(
+        type='ClassBalancedDataset',
+        oversample_thr=1e-2,
+        dataset= dict(
         type='CocoDataset',
         classes=[
             'water', 'pear', 'egg', 'grapes', 'butter', 'bread-white', 'jam',
@@ -339,6 +342,22 @@ data = dict(
         ],
         ann_file='/media/HDD_4TB_1/Datasets/AICrowd_newval/train/train_annotations_fixed.json',
         img_prefix='/media/HDD_4TB_1/Datasets/AICrowd_newval/train/images',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+            dict(type='Resize', img_scale=(1333, 800), keep_ratio=True),
+            dict(type='RandomFlip', flip_ratio=0.5),
+            dict(
+                type='Normalize',
+                mean=[123.675, 116.28, 103.53],
+                std=[58.395, 57.12, 57.375],
+                to_rgb=True),
+            dict(type='Pad', size_divisor=32),
+            dict(type='DefaultFormatBundle'),
+            dict(
+                type='Collect',
+                keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks'])
+        ]),
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
@@ -556,10 +575,10 @@ data = dict(
             'strawberries', 'wine-rosa-c', 'watermelon-fresh',
             'green -asparagus', 'white-asparagus', 'peach'
         ],
-        ann_file=
-        '/media/HDD_4TB_1/Datasets/AICrowd_newval/val/val_annotations_fixed.json',
-        img_prefix=
-        '/media/HDD_4TB_1/Datasets/AICrowd_newval/val/images',
+        # ann_file='/media/HDD_4TB_1/Datasets/food_dataset/val-v0.4/val/annotations.json',
+        # img_prefix='/media/HDD_4TB_1/Datasets/food_dataset/val-v0.4/val/images',
+        ann_file= '/media/HDD_4TB_1/Datasets/AICrowd_newval/val/val_annotations_fixed.json',
+        img_prefix= '/media/HDD_4TB_1/Datasets/AICrowd_newval/val/images',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(
@@ -580,15 +599,15 @@ data = dict(
                 ])
         ]))
 evaluation = dict(metric=['bbox', 'segm'])
-optimizer = dict(type='SGD', lr=0.02, momentum=0.9, weight_decay=0.0001)
+optimizer = dict(type='SGD', lr=0.002, momentum=0.9, weight_decay=0.0001)
 optimizer_config = dict(grad_clip=None)
 lr_config = dict(
     policy='step',
     warmup='linear',
     warmup_iters=500,
     warmup_ratio=0.001,
-    step=[10])
-total_epochs = 20
+    step=[24,30,36])
+total_epochs = 40
 checkpoint_config = dict(interval=1)
 log_config = dict(
     interval=50,
@@ -598,9 +617,9 @@ custom_hooks = [dict(type='NumClassCheckHook')]
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
 load_from = None
-resume_from = None
-workflow = [('train', 1)]
+resume_from = '/home/marcosmejia/UB/Github/mmdetection/prev_logs/epoch_19.pth'
+workflow = [('train', 1),('val',1)]
 conv_cfg = dict(type='ConvWS')
 norm_cfg = dict(type='GN', num_groups=32, requires_grad=True)
-work_dir = 'gnws_logs'
+work_dir = 'Ckp19_Val95_5_Balanced_1e-2'
 gpu_ids = range(0, 1)
