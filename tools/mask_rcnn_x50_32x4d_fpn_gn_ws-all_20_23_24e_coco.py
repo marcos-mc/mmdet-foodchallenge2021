@@ -618,8 +618,8 @@ dist_params = dict(backend='nccl')
 log_level = 'INFO'
 load_from = None
 resume_from = '/home/marcosmejia/UB/Github/mmdetection/prev_logs/epoch_19.pth'
-workflow = [('train', 1),('val',1)]
+workflow = [('train', 1), ('val',1)]
 conv_cfg = dict(type='ConvWS')
 norm_cfg = dict(type='GN', num_groups=32, requires_grad=True)
-work_dir = 'Ckp19_Val95_5_Balanced_1e-2'
+work_dir = 'TROUT_Ckp19_Val95_5_Balanced_1e-2'
 gpu_ids = range(0, 1)
