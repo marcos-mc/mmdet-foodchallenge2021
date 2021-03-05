@@ -5,7 +5,7 @@ from pycocotools.coco import COCO
 # from mrcnn.cocoeval import COCOeval
 
 ground_truth_path = r'/media/HDD_4TB_1/Datasets/AICrowd_newval/val/val_annotations_fixed.json'
-predictions_file_path = r'./predictions.segm.json'
+predictions_file_path = r'/home/marcosmejia/UB/Github/mmdetection/TROUT_Ckp19_Val95_5_Balanced_1e-2/best_map/best_map_predictions.segm.json'
 
 iouType = 'segm'  # set iouType to 'segm', 'bbox' or 'keypoints'
 

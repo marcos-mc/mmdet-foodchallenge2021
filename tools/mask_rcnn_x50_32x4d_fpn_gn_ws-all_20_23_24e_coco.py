@@ -599,15 +599,15 @@ data = dict(
                 ])
         ]))
 evaluation = dict(metric=['bbox', 'segm'])
-optimizer = dict(type='SGD', lr=0.002, momentum=0.9, weight_decay=0.0001)
+optimizer = dict(type='SGD', lr=2e-3, momentum=0.9, weight_decay=0.0001)
 optimizer_config = dict(grad_clip=None)
 lr_config = dict(
     policy='step',
     warmup='linear',
     warmup_iters=500,
     warmup_ratio=0.001,
-    step=[24,30,36])
-total_epochs = 40
+    step=[15])
+total_epochs = 20
 checkpoint_config = dict(interval=1)
 log_config = dict(
     interval=50,
@@ -616,10 +616,10 @@ log_config = dict(
 custom_hooks = [dict(type='NumClassCheckHook')]
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-load_from = None
-resume_from = '/home/marcosmejia/UB/Github/mmdetection/prev_logs/epoch_19.pth'
+load_from = '/home/marcosmejia/UB/Github/mmdetection/TROUT_Ckp19_Val95_5_Balanced_1e-2/epoch_25.pth'
+resume_from = None
 workflow = [('train', 1), ('val',1)]
 conv_cfg = dict(type='ConvWS')
 norm_cfg = dict(type='GN', num_groups=32, requires_grad=True)
-work_dir = 'TROUT_Ckp19_Val95_5_Balanced_1e-2'
+work_dir = 'TROUT_Ckp25_Val95_5_Balanced_1e-2_lr_2e-3'
 gpu_ids = range(0, 1)

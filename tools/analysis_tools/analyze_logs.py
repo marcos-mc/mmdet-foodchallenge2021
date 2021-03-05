@@ -148,10 +148,12 @@ def load_json_logs(json_logs):
     # keys of sub dict is different metrics, e.g. memory, bbox_mAP
     # value of sub dict is a list of corresponding values of all iterations
     log_dicts = [dict() for _ in json_logs]
+    
     for json_log, log_dict in zip(json_logs, log_dicts):
         with open(json_log, 'r') as log_file:
             for line in log_file:
                 log = json.loads(line.strip())
+                # print(log.keys())
                 # skip lines without `epoch` field
                 if 'epoch' not in log:
                     continue

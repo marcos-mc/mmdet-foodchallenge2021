@@ -60,7 +60,7 @@ for index, row in results.iterrows():
         if g not in pred:
             fn[cat_ids_unique.index(g)] += 1
 
-np.savetxt("bread_true_positives.csv", tp, delimiter=",")
-np.savetxt("bread_false_positives.csv", fp, delimiter=",")
-np.savetxt("bread_false_negatives.csv", fn, delimiter=",")
-np.savetxt("bread_mismatches.csv", mismatches, delimiter=",")
+np.savetxt("true_positives.csv", tp, delimiter=",")
+np.savetxt("false_positives.csv", fp, delimiter=",")
+np.savetxt("false_negatives.csv", fn, delimiter=",")
+np.savetxt("mismatches.csv", mismatches, delimiter=",")
